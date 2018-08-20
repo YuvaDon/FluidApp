@@ -1,26 +1,28 @@
 package yuva_dondapati.demos.android.fluidbookshelf.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-
-import android.widget.GridView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
+import android.widget.TextView;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import yuva_dondapati.demos.android.fluidbookshelf.MainActivity;
 import yuva_dondapati.demos.android.fluidbookshelf.R;
+import yuva_dondapati.demos.android.fluidbookshelf.model.ImageModel;
 
 
-public class ImageAdapter extends BaseAdapter{
+public class ImageAdapter extends ArrayAdapter<ImageModel>{
     private Context mContext;
-    List<Integer> imageList;
+    List<ImageModel> imageList;
 
-    // Constructor
-    public ImageAdapter(Context c,  List<Integer> imageList){
-        mContext = c;
+    public ImageAdapter(Context mContext,  List<ImageModel> imageList){
+        super(mContext, R.layout.grid_item, imageList);
+        this.mContext = mContext;
         this.imageList  = imageList;
     }
 
@@ -30,7 +32,7 @@ public class ImageAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
+    public ImageModel getItem(int position) {
         return imageList.get(position);
     }
 
@@ -41,11 +43,33 @@ public class ImageAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ImageView imageView = new ImageView(mContext);
-        imageView.setImageResource(imageList.get(position));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(280, 300));
+        View imageView = convertView;
+        ViewHolder holder;
+
+        if (imageView == null) {
+            LayoutInflater inflater = ((MainActivity) mContext).getLayoutInflater();
+            imageView = inflater.inflate(R.layout.grid_item, viewGroup, false);
+            holder = new ViewHolder();
+            holder.imageTitle = imageView.findViewById(R.id.grid_item_title);
+            holder.image = imageView.findViewById(R.id.grid_item_image);
+            holder.date = imageView.findViewById(R.id.grid_item_date);
+            imageView.setTag(holder);
+        } else {
+            holder = (ViewHolder) imageView.getTag();
+        }
+        Date cal = Calendar.getInstance().getTime();
+        ImageModel item = imageList.get(position);
+        holder.imageTitle.setText(item.getTitle());
+        holder.image.setImageResource(item.getImageUrl());
+        holder.date.setVisibility(View.VISIBLE);
+        holder.date.setText(cal.toLocaleString().toString());
         return imageView;
+    }
+
+    private static class ViewHolder {
+        TextView imageTitle;
+        ImageView image;
+        TextView date;
     }
 
 }
