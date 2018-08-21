@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
     TextView tv;
     GridView gridView;
     int counter =0;
-    private static final String LIST_STATE = "listState";
-    private Parcelable mListState = null;
     ArrayList<ImageModel> imageListModel;
     ArrayList<ImageModel> imageListModel2;
     //images list
