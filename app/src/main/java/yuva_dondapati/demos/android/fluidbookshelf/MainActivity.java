@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = findViewById(R.id.toolbar_title);
-        if (savedInstanceState != null) {
-           imageListModel2 = (ArrayList<ImageModel>) savedInstanceState.getSerializable("key1");
-        }
-            setUpImages();
+         setUpImages();
          setUpToolBar();
          setUpGridView();
     }
@@ -71,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
     }
 
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return imageListModel2;
-    }
-
     private void setUpToolBar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
               if(counter ==10 ){
                   counter =0;
               }
-
                 imageListModel2.add(imageListModel.get(new Random().nextInt(mThumbIds.length)));
                 adapter.notifyDataSetChanged();
                 counter++;
@@ -99,10 +90,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("key1", imageListModel2);
-    }
 }
 
