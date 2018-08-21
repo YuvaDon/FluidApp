@@ -1,11 +1,9 @@
 package yuva_dondapati.demos.android.fluidbookshelf;
 
-import android.content.res.Configuration;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
