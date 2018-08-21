@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -57,12 +59,13 @@ public class ImageAdapter extends ArrayAdapter<ImageModel>{
         } else {
             holder = (ViewHolder) imageView.getTag();
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm:ss");
         Date cal = Calendar.getInstance().getTime();
         ImageModel item = imageList.get(position);
         holder.imageTitle.setText(item.getTitle());
         holder.image.setImageResource(item.getImageUrl());
         holder.date.setVisibility(View.VISIBLE);
-        holder.date.setText(cal.toLocaleString().toString());
+        holder.date.setText(dateFormat.format(cal));
         return imageView;
     }
 

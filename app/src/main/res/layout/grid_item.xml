@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp">
+    android:layout_height="match_parent">
 
 <RelativeLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/rel1">
+    android:layout_height="100dp"
+    android:id="@+id/rel1"
+    >
 
     <ImageView
         android:id="@+id/grid_item_image"
-        android:layout_width="70dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/pic1"
         android:textSize="15sp" />
@@ -21,24 +24,26 @@
         android:layout_height="wrap_content"
         android:text="TextView  hshdsjhs dsfsds"
         android:textSize="11sp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textAlignment="center"
         android:layout_centerInParent="true"
         />
+
 </RelativeLayout>
-   <TextView
+    <TextView
         android:id="@+id/grid_item_date"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text="TextView"
+        android:text="TextView dsdfsfsg"
         android:textSize="8sp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:background="@drawable/nav_wooddark"
         android:layout_below="@+id/rel1"
         android:gravity="center"
         android:textAlignment="center"
-       android:background="@drawable/nav_wooddark"
         android:visibility="gone"
         />
 

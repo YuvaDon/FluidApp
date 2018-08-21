@@ -1,14 +1,19 @@
 package yuva_dondapati.demos.android.fluidbookshelf;
 
+import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Random;
+
 import yuva_dondapati.demos.android.fluidbookshelf.adapter.ImageAdapter;
 import yuva_dondapati.demos.android.fluidbookshelf.model.ImageModel;
 
@@ -17,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
     TextView tv;
     GridView gridView;
     int counter =0;
-    ArrayList<ImageModel> imageListModel, imageListModel2;
+    private static final String LIST_STATE = "listState";
+    private Parcelable mListState = null;
+    ArrayList<ImageModel> imageListModel;
+    ArrayList<ImageModel> imageListModel2;
     //images list
     public Integer[] mThumbIds = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
             R.drawable.pic4, R.drawable.pic5,
@@ -25,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.pic8, R.drawable.pic9, R.drawable.pic10
     };
     //titles list
-    public String[] titles = {"Sample NoteBook 01", "Sample NoteBook 02","Sample NoteBook 03","Sample NoteBook 04","Sample NoteBook 05"
-            ,"Sample NoteBook 06","Sample NoteBook 07","Sample NoteBook 08","Sample NoteBook 09", "Sample NoteBook 10"
+    public String[] titles = {"Sample\nNoteBook 01", "Sample\nNoteBook 02","Sample\nNoteBook 03","Sample\nNoteBook 04","Sample\nNoteBook 05"
+            ,"Sample\nNoteBook 06","Sample\nNoteBook 07","Sample\nNoteBook 08","Sample\nNoteBook 09", "Sample\nNoteBook 10"
     };
     ImageAdapter adapter;
     @Override
@@ -40,14 +48,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         tv = findViewById(R.id.toolbar_title);
-         setUpImages();
+        tv = findViewById(R.id.toolbar_title);
+        if (savedInstanceState != null) {
+           imageListModel2 = (ArrayList<ImageModel>) savedInstanceState.getSerializable("key1");
+        }
+            setUpImages();
          setUpToolBar();
          setUpGridView();
     }
 
     private void setUpImages() {
-        imageListModel = new ArrayList();
+        imageListModel = new ArrayList<>();
        for(int i=0; i<10;i++){
            imageListModel.add(new ImageModel(titles[i], mThumbIds[i]));
         }
@@ -58,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         imageListModel2 = new ArrayList<>();
         adapter = new ImageAdapter(this, imageListModel2);
         gridView.setAdapter(adapter);
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return imageListModel2;
     }
 
     private void setUpToolBar() {
@@ -73,13 +89,20 @@ public class MainActivity extends AppCompatActivity {
               if(counter ==10 ){
                   counter =0;
               }
-                imageListModel2.add(imageListModel.get(counter));
+
+                imageListModel2.add(imageListModel.get(new Random().nextInt(mThumbIds.length)));
                 adapter.notifyDataSetChanged();
                 counter++;
                 return true;
                 default:
                     return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("key1", imageListModel2);
     }
 }
 
